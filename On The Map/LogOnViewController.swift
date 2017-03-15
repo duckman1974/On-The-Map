@@ -30,39 +30,117 @@ class LogOnViewController: UIViewController, UITextFieldDelegate {
         /* Get the app delegate */
         appDelegate = UIApplication.shared.delegate as! AppDelegate
         
-        //logInText.text = "LOG IN TO UDACITY"
+        logInText.text = "LOG IN TO UDACITY"
        
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        subscribeToKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        unsubscribeFromKeyboardNotifications()
+    }
     
     
     @IBAction func logIn(_ sender: AnyObject) {
         
-        if((userName.text!.isEmpty) || (passWord.text!.isEmpty)) {
-            
-            print("Username or Password is empty")
-            
-        } else {
-            
             let email = userName.text!
             let password = passWord.text!
-            //print(email)
-            //print(password)
             
             UdacityClient.sharedInstance().logInToUdacity(email: email, password: password, completionHandler: logInSucceeded)
             
             
+    }
+    
+    
+    func logInSucceeded(success: Bool, result: AnyObject?, error: NSError?) -> Void {
+        if success {
+                
+            let controller = self.storyboard!.instantiateViewController(withIdentifier: "TabBarViewController") as! UITabBarController
+            
+            //let test = UIStoryboard(name: "main", bundle: nil).instantiateViewController(withIdentifier: "TabBarViewController")
+            present(controller, animated: true, completion: nil)
+                
+        } else {
+            print("Not successful")
         }
     }
     
-        func logInSucceeded(success: Bool, result: AnyObject?, error: NSError?) -> Void {
-            if success {
-                print("successful")
-                
-            } else {
-                print("Not successful")
-            }
+    
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool
+    {
+        userName.resignFirstResponder()
+        passWord.resignFirstResponder()
+        
+        return true
+        
+    }
+    
+    func getKeyboardHeight(notification: NSNotification) -> CGFloat
+    {
+        let userInfo = notification.userInfo
+        let keyboardSize = userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue
+        
+        if passWord.isFirstResponder
+        {
+            return keyboardSize!.cgRectValue.height
+            
         }
+            
+        else
+        {
+            return 0
+            
+        }
+        
+    }
+    
+    
+    
+    
+    
+    func keyboardWillShow(_ notification:Notification)
+    {
+        view.frame.origin.y = getKeyboardHeight(notification: notification as NSNotification) * (-1)
+    }
+    
+    func keyboardWillHide(_ notification:Notification)
+    {
+        view.frame.origin.y = 0
+    }
+    
+    
+    func subscribeToKeyboardNotifications()
+    {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    func unsubscribeFromKeyboardNotifications()
+    {
+        
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
 

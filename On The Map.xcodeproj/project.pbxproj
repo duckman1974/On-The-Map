@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		7420385C1E7763FE0081703D /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7420385B1E7763FE0081703D /* UdacityClient.swift */; };
+		74806B5C1E78DDB9007C3E8F /* ConvenienceFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74806B5B1E78DDB9007C3E8F /* ConvenienceFile.swift */; };
 		749A219D1E74D5CE0023B635 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749A219C1E74D5CE0023B635 /* AppDelegate.swift */; };
 		749A219F1E74D5CE0023B635 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 749A219E1E74D5CE0023B635 /* ViewController.swift */; };
 		749A21A21E74D5CE0023B635 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 749A21A01E74D5CE0023B635 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 
 /* Begin PBXFileReference section */
 		7420385B1E7763FE0081703D /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
+		74806B5B1E78DDB9007C3E8F /* ConvenienceFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConvenienceFile.swift; sourceTree = "<group>"; };
 		749A21991E74D5CE0023B635 /* On The Map.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "On The Map.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		749A219C1E74D5CE0023B635 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		749A219E1E74D5CE0023B635 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				749A21AB1E74D5CE0023B635 /* Info.plist */,
 				749A21A31E74D5CE0023B635 /* On_The_Map.xcdatamodeld */,
 				749A21B11E74DC2C0023B635 /* Constants.swift */,
+				74806B5B1E78DDB9007C3E8F /* ConvenienceFile.swift */,
 				74A72F221E760B6E0076D982 /* LogOnViewController.swift */,
 				7420385B1E7763FE0081703D /* UdacityClient.swift */,
 			);
@@ -155,6 +158,7 @@
 				749A21A51E74D5CE0023B635 /* On_The_Map.xcdatamodeld in Sources */,
 				749A219D1E74D5CE0023B635 /* AppDelegate.swift in Sources */,
 				749A21B21E74DC2C0023B635 /* Constants.swift in Sources */,
+				74806B5C1E78DDB9007C3E8F /* ConvenienceFile.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
