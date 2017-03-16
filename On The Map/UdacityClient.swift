@@ -12,6 +12,7 @@ class UdacityClient: NSObject {
     
     
     var session = URLSession.shared
+    var appDelegate: AppDelegate!
     
     override init() {
         super.init()
@@ -80,35 +81,51 @@ class UdacityClient: NSObject {
             completionHandlerForConvertData(false, nil, NSError(domain: "convertDataWithCompletionHandler", code: 1, userInfo: userInfo))
         }
         
+        guard let account = parsedResult["account"] as? [String:AnyObject] else {
+            print("Error with Account info")
+            return
+        }
+        
+        guard let userID = account["key"] as? String else {
+            print("Error with Key info")
+            return
+        }
+        
+        guard let sessionDict = parsedResult["session"] as? [String:AnyObject] else {
+            print("Error with Session info")
+            return
+        }
+        
+        guard let session = sessionDict["id"] as? String else {
+            print("Error with session id")
+            return
+        }
+        
+        
+        print(userID)
+        print(session)
+        
+        appDelegate?.userID = userID
+        appDelegate?.session = session
+        
+        /*
+        
         if let jsonResult = parsedResult["account"] as? [String: AnyObject] {
-            print(" ")
             print("HERE IS MY PARSED KEY + ID ONLY:--------------------------------------------------------------------")
             let accountKey = jsonResult["key"]
-            //let sessionID = jsonResult["id"]
             print("Account: \(accountKey)")
-            //print("session: \(sessionID)")
         }
         
         if let jsonResult = parsedResult["session"] as? [String: AnyObject] {
-            //print(" ")
-            //print("HERE IS MY PARSED KEY + ID ONLY:--------------------------------------------------------------------")
-            //let accountKey = jsonResult["key"]
             let sessionID = jsonResult["id"]
-            //print("Account: \(accountKey)")
             print("session: \(sessionID)")
         }
+ */
+        
+        
         
         //completionHandlerForConvertData(true, parsedResult as AnyObject?, nil)
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 }
