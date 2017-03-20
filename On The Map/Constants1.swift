@@ -2,11 +2,9 @@
 //  Constants.swift
 //  On The Map
 //
-//  Created by Candice Reese on 3/16/17.
+//  Created by Candice Reese on 3/11/17.
 //  Copyright © 2017 Kevin Reese. All rights reserved.
 //
-
-import Foundation
 
 import UIKit
 
@@ -26,13 +24,13 @@ struct Constants {
         
         static let ParseApplicationID = "QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr"
         static let RestAPIKey = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
-        
+    
     }
     
     struct UdacityAPI {
         
-        static let ApiScheme = "https"
-        static let ApiHost = "www.udacity.com"
+        //static let ApiScheme = "https"
+        //static let ApiHost = "www.udacity.com"
         static let ApiPath = "/api"
         static let BaseURL = "https://www.udacity.com"
         
@@ -45,7 +43,6 @@ struct Constants {
         static let Password = "password"
         static let SessionID = "session"
         static let Udacity = "udacity"
-        static let Users = "/users"
         
         
         
@@ -55,11 +52,6 @@ struct Constants {
         
         static let UserID = "id"
         
-    }
-    
-    struct parsedResults {
-        
-    
     }
     
 }
