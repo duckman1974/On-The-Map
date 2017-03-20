@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import Foundation
 
 
 class ViewController: UIViewController, MKMapViewDelegate {
@@ -15,18 +16,34 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
 
+    @IBOutlet weak var logOutButton: UIBarButtonItem!
     
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        
+        
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
     }
 
     
+    @IBAction func logOut(_ sender: Any) {
+        
+        dismiss(animated: true, completion: {
+            UdacityClient.sharedInstance().logoutSession()
+        })
+        
+    }
+    
+        
+        
+    }
 
 
-}
+
 

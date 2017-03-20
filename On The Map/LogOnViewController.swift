@@ -20,17 +20,19 @@ class LogOnViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passWord: UITextField!
     @IBOutlet weak var logIn: UIButton!
     @IBOutlet weak var logInText: UILabel!
+    @IBOutlet weak var udacityImage: UIImageView!
+    @IBOutlet weak var statusWheel: UIActivityIndicatorView!
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         session = URLSession.shared
-        
-        /* Get the app delegate */
         appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
-        logInText.text = "LOG IN TO UDACITY"
+        self.userName.delegate = self
+        self.passWord.delegate = self
+        statusWheel.isHidden = true
        
     }
     
@@ -44,33 +46,54 @@ class LogOnViewController: UIViewController, UITextFieldDelegate {
         unsubscribeFromKeyboardNotifications()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        self.statusWheel.stopAnimating()
+        self.statusWheel.isHidden = true
+    }
+    
+    
+    
     
     @IBAction func logIn(_ sender: AnyObject) {
         
-            let email = userName.text!
-            let password = passWord.text!
-            
-            UdacityClient.sharedInstance().logInToUdacity(email: email, password: password, completionHandler: logInSucceeded)
-            
-            
-    }
-    
-    
-    func logInSucceeded(success: Bool, result: AnyObject?, error: NSError?) -> Void {
-        if success {
-                
-            let controller = self.storyboard!.instantiateViewController(withIdentifier: "TabBarViewController") as! UITabBarController
-            
-            //let test = UIStoryboard(name: "main", bundle: nil).instantiateViewController(withIdentifier: "TabBarViewController")
-            present(controller, animated: true, completion: nil)
-                
+        let email = userName.text!
+        let password = passWord.text!
+        
+        if ((email.isEmpty) || (password.isEmpty)) {
+            errorAlert(errorString: "Email or Password field is empty.  Please enter missing info.")
         } else {
-            print("Not successful")
+       
+        UdacityClient.sharedInstance().logInToUdacity(email: email, password: password) { (success, errorString) in
+            
+            if success {
+               // UdacityClient.sharedInstance().getUserData(userID: self.appDelegate.userID!) { (success, errorString) in
+                    
+                    if success {
+                        performUIUpdatesOnMain {
+                        
+                            self.statusWheel.isHidden = false
+                            self.statusWheel.startAnimating()
+                            self.completeLogin()
+                        }
+                    }else {
+                            self.errorAlert(errorString: "Login Failed either due to incorrect Email/Password or Network issues")
+                    }
+                //    }
+               // } else {
+              //  self.errorAlert(errorString: "Error in logonviewcontroller in triangle")
+           // }
+            
+            }
+            }
         }
     }
-    
-    
-    
+
+
+    private func completeLogin() {
+        let controller = storyboard!.instantiateViewController(withIdentifier: "TabBarViewController") as! UITabBarController
+        present(controller, animated: true, completion: nil)
+    }
+   
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool
     {
@@ -101,9 +124,6 @@ class LogOnViewController: UIViewController, UITextFieldDelegate {
     }
     
     
-    
-    
-    
     func keyboardWillShow(_ notification:Notification)
     {
         view.frame.origin.y = getKeyboardHeight(notification: notification as NSNotification) * (-1)
@@ -129,15 +149,16 @@ class LogOnViewController: UIViewController, UITextFieldDelegate {
         NotificationCenter.default.removeObserver(self, name: .UIKeyboardWillHide, object: nil)
     }
     
+}
+
+extension LogOnViewController: UITextViewDelegate {
     
-    
-    
-    
-    
-    
-    
-    
-    
+    func errorAlert(errorString: String) {
+        let alertController = UIAlertController(title: "Error", message: errorString, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
+        
+    }
     
     
     
